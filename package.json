@@ -1,0 +1,41 @@
+{
+  "name": "modularni-urad-optionman",
+  "description": "options manager api",
+  "version": "1.0.1",
+  "scripts": {
+    "start": "node -r esm server.js",
+    "startdbg": "node -r esm --inspect-brk server.js",
+    "test": "mocha -r esm --exit './test/main.js'",
+    "testdbg": "mocha -r esm --inspect './test/main.js'"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Vaclav Klecanda <vencax77@gmail.com>"
+  },
+  "license": "BSD",
+  "engines": {
+    "node": ">=12.x",
+    "npm": ">=6.x"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "knex": "^0.21.16",
+    "modularni-urad-utils": "1.2.1",
+    "pg": "^8.6.0",
+    "underscore": "^1.13.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.2.0",
+    "esm": "^3.0.84",
+    "expect": "^1.20.2",
+    "jsdom": "^9.8.0",
+    "knex-hooks": "0.0.9",
+    "mocha": "^8.0.1",
+    "moment": "^2.29.1",
+    "sqlite3": "^4.2.0"
+  },
+  "private": "false"
+}
