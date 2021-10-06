@@ -1,5 +1,6 @@
 import path from 'path'
 import express from 'express'
+import { attachPaginate } from 'knex-paginate'
 import initErrorHandlers from 'modularni-urad-utils/error_handlers'
 import { 
   required, requireMembership, isMember, getUID 
@@ -12,6 +13,7 @@ export default async function init (mocks = null) {
   const knex = mocks
     ? await mocks.dbinit(migrationsDir)
     : await initDB(migrationsDir)
+  attachPaginate()
 
   const auth = { required, requireMembership, isMember, getUID }
   const appContext = { express, knex, auth }

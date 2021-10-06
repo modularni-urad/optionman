@@ -14,8 +14,12 @@ export default (ctx) => {
   })
 
   app.get('/', loadOrgID, auth.required, (req, res, next) => {
-    Groups.list(req.orgid, knex)
-      .then(data => res.json(data))
+    const query = Object.assign(req.query, { filter: req.query.filter ?
+      JSON.parse(req.query.filter) : {} })
+    Groups.list(query, req.orgid, knex)
+      .then(data => {
+        res.json(data)
+      })
       .catch(next)
   })
 
@@ -32,7 +36,9 @@ export default (ctx) => {
   })
 
   app.get('/:gid', loadOrgID, (req, res, next) => {
-    Options.list(req.params.gid, req.orgid, knex)
+    const query = Object.assign(req.query, { filter: req.query.filter ?
+      JSON.parse(req.query.filter) : {} })
+    Options.list(query, req.params.gid, req.orgid, knex)
       .then(data => res.json(data))
       .catch(next)
   })

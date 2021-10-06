@@ -7,7 +7,8 @@ module.exports = (g) => {
   //
   const r = chai.request(g.baseurl)
   const p = {
-    group: 'users'
+    name: 'pok',
+    owner: 'users'
   }
 
   return describe('groups', () => {
@@ -18,7 +19,7 @@ module.exports = (g) => {
     })
 
     it('must not create a new item without mandatory item', async () => {
-      const res = await r.post('/').send(_.omit(p, 'group'))
+      const res = await r.post('/').send(_.omit(p, 'owner'))
         .set('Authorization', 'Bearer f')
       res.should.have.status(400)
     })
@@ -33,10 +34,17 @@ module.exports = (g) => {
 
     it('shall update the item pok1', async () => {
       const change = {
-        group: 'admins'
+        owner: 'admins'
       }
       const res = await r.put(`/${p.id}`).send(change)
         .set('Authorization', 'Bearer f')
+      res.should.have.status(200)
+    })
+
+    it('shall get the groups', async () => {
+      const res = await r.get(`/`).set('Authorization', 'Bearer f')
+      res.body.length.should.eql(1)
+      res.body[0].owner.should.eql('admins')
       res.should.have.status(200)
     })
     

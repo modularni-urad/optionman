@@ -6,6 +6,7 @@ exports.up = (knex, Promise) => {
       .references('id').inTable(TABLE_NAMES.GROUPS)
     table.string('label', 64).notNullable()
     table.string('value', 64).notNullable()
+    table.string('note', 64)
     table.primary(['parentid', 'value'])
   })
 }
