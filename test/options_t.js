@@ -17,23 +17,23 @@ module.exports = (g) => {
     //
     it('must not create a new item without auth', async () => {
       const res = await r.post(`/${g.optiongroup.id}`).send(p)
-      res.should.have.status(400)
+      res.should.have.status(401)
     })
-
-    // it('shall create a new item without mandatory item', async () => {
-    //   const res = await r.post(`/${g.optiongroup.id}`).send(_.omit(p, 'label'))
-    //     .set('Authorization', 'Bearer f')
-    //   res.should.have.status(400)
-    // })
 
     it('must not create a new item without appropriate group', async () => {
       const res = await r.post(`/${g.optiongroup.id}`).send(p)
+        .set('Authorization', 'Bearer f')
+      res.should.have.status(401)
+    })
+
+    it('shall create a new item without mandatory item', async () => {
+      g.mockUser.groups = [ 'admins' ]
+      const res = await r.post(`/${g.optiongroup.id}`).send(_.omit(p, 'label'))
         .set('Authorization', 'Bearer f')
       res.should.have.status(400)
     })
 
     it('shall create a new item pok1', async () => {
-      g.mockUser.groups = [ 'admins' ]
       const res = await r.post(`/${g.optiongroup.id}`).send(p)
         .set('Authorization', 'Bearer f')
       res.should.have.status(200)

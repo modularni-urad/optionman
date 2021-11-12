@@ -1,4 +1,5 @@
 import _ from 'underscore'
+import { APIError } from 'modularni-urad-utils'
 import { TABLE_NAMES, MULTITENANT } from '../consts'
 import entity from 'entity-api-base'
 const conf = {
@@ -10,7 +11,11 @@ export default { create, list, update }
   
 async function create (body, orgid, knex) {
   MULTITENANT && Object.assign(body, { orgid })
-  return knex(TABLE_NAMES.GROUPS).insert(body).returning('*')
+  try {
+    return await knex(TABLE_NAMES.GROUPS).insert(body).returning('*')
+  } catch(err) {
+    throw new APIError(400, 'wrong data:' + err.toString())
+  }
 }
 
 async function update (id, body, orgid, user, knex) {
