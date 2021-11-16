@@ -5,7 +5,7 @@ chai.should()
 
 module.exports = (g) => {
   //
-  const r = chai.request(g.baseurl)
+  const r = chai.request(g.baseurl + '/api.domain1.cz')
   const p = {
     name: 'pok',
     owner: 'users'

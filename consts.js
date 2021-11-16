@@ -1,4 +1,4 @@
-export const MULTITENANT = process.env.MULTITENANT || false
+export const MULTITENANT = process.env.MULTITENANT || true
 
 export const TABLE_NAMES = {
   GROUPS: 'optionman_groups',
