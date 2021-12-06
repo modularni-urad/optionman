@@ -13,7 +13,7 @@ exports.up = (knex, Promise) => {
 
   return builder.createTable(TABLE_NAMES.OPTIONS, (table) => {
     table.string('parent').notNullable()
-      .references('slug').inTable(TABLE_NAMES.GROUPS)
+      .references('slug').inTable(tableName(TABLE_NAMES.GROUPS))
     table.string('label', 64).notNullable()
     table.string('value', 64).notNullable()
     table.string('note', 64)
