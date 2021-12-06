@@ -1,31 +1,32 @@
-import _ from 'underscore'
-import { APIError } from 'modularni-urad-utils'
-import { TABLE_NAMES, MULTITENANT } from '../consts'
-import entity from 'entity-api-base'
+import { TABLE_NAMES, getQB } from '../consts'
 const conf = {
   tablename: TABLE_NAMES.GROUPS,
   editables: ['name', 'owner']
 }
 
-export default { create, list, update }
-  
-async function create (body, orgid, knex) {
-  MULTITENANT && Object.assign(body, { orgid })
-  try {
-    return await knex(TABLE_NAMES.GROUPS).insert(body).returning('*')
-  } catch(err) {
-    throw new APIError(400, 'wrong data:' + err.toString())
+export default (ctx) => {
+  const { knex, ErrorClass } = ctx
+  const _ = ctx.require('underscore')
+  const entityMWBase = ctx.require('entity-api-base').default
+  const MW = entityMWBase(conf, knex, ErrorClass)
+
+  return { create, list, update }
+    
+  async function create (body, schema) {
+    try {
+      return await getQB(knex, TABLE_NAMES.GROUPS, schema).insert(body).returning('*')
+    } catch(err) {
+      throw new ErrorClass(400, 'wrong data:' + err.toString())
+    }
   }
-}
 
-async function update (id, body, orgid, user, knex) {
-  const cond = { id }
-  MULTITENANT && Object.assign(cond, { orgid })
-  return knex(TABLE_NAMES.GROUPS).where(cond).update(body).returning('*')
-}
+  async function update (slug, body, user, schema) {
+    return getQB(knex, TABLE_NAMES.GROUPS, schema)
+      .where({ slug }).update(body).returning('*')
+  }
 
-async function list (query, orgid, knex) {
-  query.filter = query.filter || {}
-  MULTITENANT && Object.assign(query.filter, { orgid })
-  return entity.list(query, conf, knex)
+  async function list (query, schema) {
+    query.filter = query.filter || {}
+    return MW.list(query, schema)
+  }
 }

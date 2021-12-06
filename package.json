@@ -1,7 +1,7 @@
 {
   "name": "modularni-urad-optionman",
   "description": "options manager api",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "scripts": {
     "start": "node -r esm server.js",
     "startdbg": "node -r esm --inspect-brk server.js",
@@ -17,29 +17,26 @@
     "node": ">=12.x",
     "npm": ">=6.x"
   },
-  "dependencies": {
-    "axios": "^0.21.4",
-    "chokidar": "^3.5.2",
-    "cors": "^2.8.5",
-    "entity-api-base": "^0.1.0",
-    "esm": "^3.2.25",
-    "express": "^4.17.1",
-    "knex": "^0.21.21",
-    "knex-paginate": "^1.2.1",
-    "modularni-urad-utils": "^1.4.0",
-    "pg": "^8.6.0",
-    "underscore": "^1.13.1",
-    "yaml": "^1.10.2"
-  },
   "devDependencies": {
+    "axios": "^0.21.4",
     "chai": "^4.1.2",
     "chai-http": "^4.2.0",
-    "esm": "^3.0.84",
+    "chokidar": "^3.5.2",
+    "cors": "^2.8.5",
+    "entity-api-base": "^0.2.0",
+    "esm": "^3.2.25",
     "expect": "^1.20.2",
+    "express": "^4.17.1",
     "jsdom": "^9.8.0",
+    "knex": "^0.21.21",
+    "knex-paginate": "^1.2.1",
     "mocha": "^8.0.1",
+    "modularni-urad-utils": "^1.5.0",
     "moment": "^2.29.1",
-    "sqlite3": "^4.2.0"
+    "pg": "^8.6.0",
+    "sqlite3": "^4.2.0",
+    "underscore": "^1.13.1",
+    "yaml": "^1.10.2"
   },
   "private": "false"
 }

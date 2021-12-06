@@ -1,13 +1,9 @@
-/* global describe it */
-import _ from 'underscore'
-const chai = require('chai')
-chai.should()
-
 module.exports = (g) => {
-  //
-  const r = chai.request(g.baseurl + '/api.domain1.cz')
+  const _ = g.require('underscore')
+  const r = g.chai.request(g.baseurl)
   const p = {
-    name: 'pok',
+    slug: 'pok',
+    name: 'pokus',
     owner: 'users'
   }
 
@@ -28,7 +24,6 @@ module.exports = (g) => {
       const res = await r.post('/').send(p).set('Authorization', 'Bearer f')
       res.should.have.status(200)
       res.should.have.header('content-type', /^application\/json/)
-      p.id = res.body[0]
       g.optiongroup = p
     })
 
@@ -36,7 +31,7 @@ module.exports = (g) => {
       const change = {
         owner: 'admins'
       }
-      const res = await r.put(`/${p.id}`).send(change)
+      const res = await r.put(`/${p.slug}`).send(change)
         .set('Authorization', 'Bearer f')
       res.should.have.status(200)
     })

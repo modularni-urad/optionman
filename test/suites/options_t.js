@@ -1,12 +1,6 @@
-/* global describe it */
-import moment from 'moment'
-import _ from 'underscore'
-const chai = require('chai')
-chai.should()
-
 module.exports = (g) => {
-  //
-  const r = chai.request(g.baseurl + '/api.domain1.cz')
+  const _ = g.require('underscore')
+  const r = g.chai.request(g.baseurl)
 
   const p = {
     label: 'option1',
@@ -16,25 +10,25 @@ module.exports = (g) => {
   return describe('options', () => {
     //
     it('must not create a new item without auth', async () => {
-      const res = await r.post(`/${g.optiongroup.id}`).send(p)
+      const res = await r.post(`/${g.optiongroup.slug}`).send(p)
       res.should.have.status(401)
     })
 
     it('must not create a new item without appropriate group', async () => {
-      const res = await r.post(`/${g.optiongroup.id}`).send(p)
+      const res = await r.post(`/${g.optiongroup.slug}`).send(p)
         .set('Authorization', 'Bearer f')
       res.should.have.status(401)
     })
 
     it('shall create a new item without mandatory item', async () => {
       g.mockUser.groups = [ 'admins' ]
-      const res = await r.post(`/${g.optiongroup.id}`).send(_.omit(p, 'label'))
+      const res = await r.post(`/${g.optiongroup.slug}`).send(_.omit(p, 'label'))
         .set('Authorization', 'Bearer f')
       res.should.have.status(400)
     })
 
     it('shall create a new item pok1', async () => {
-      const res = await r.post(`/${g.optiongroup.id}`).send(p)
+      const res = await r.post(`/${g.optiongroup.slug}`).send(p)
         .set('Authorization', 'Bearer f')
       res.should.have.status(200)
       res.should.have.header('content-type', /^application\/json/)
@@ -46,13 +40,13 @@ module.exports = (g) => {
       const change = {
         label: 'pok1changed'
       }
-      const res = await r.put(`/${g.optiongroup.id}/${p.value}`)
+      const res = await r.put(`/${g.optiongroup.slug}/${p.value}`)
         .send(change).set('Authorization', 'Bearer f')
       res.should.have.status(200)
     })
 
     it('shall get the options', async () => {
-      const res = await r.get(`/${g.optiongroup.id}`)
+      const res = await r.get(`/${g.optiongroup.slug}`)
       res.body.length.should.eql(1)
       res.body[0].label.should.eql('pok1changed')
       res.should.have.status(200)
