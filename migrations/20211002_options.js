@@ -12,7 +12,7 @@ exports.up = (knex, Promise) => {
     : knex.schema
 
   return builder.createTable(TABLE_NAMES.OPTIONS, (table) => {
-    table.integer('parent').notNullable()
+    table.string('parent').notNullable()
       .references('slug').inTable(TABLE_NAMES.GROUPS)
     table.string('label', 64).notNullable()
     table.string('value', 64).notNullable()

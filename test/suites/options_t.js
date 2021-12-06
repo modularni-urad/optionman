@@ -15,6 +15,7 @@ module.exports = (g) => {
     })
 
     it('must not create a new item without appropriate group', async () => {
+      g.mockUser.groups = [ 'notadmins' ]
       const res = await r.post(`/${g.optiongroup.slug}`).send(p)
         .set('Authorization', 'Bearer f')
       res.should.have.status(401)
