@@ -2,7 +2,7 @@
 import { TABLE_NAMES, getQB } from '../consts'
 const conf = {
   tablename: TABLE_NAMES.OPTIONS,
-  editables: ['label', 'value', 'note']
+  editables: ['text', 'value', 'note']
 }
 
 export default (ctx) => {
